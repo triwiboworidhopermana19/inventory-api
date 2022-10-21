@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'filename'  => '_ide_helper.php',
+    'filename' => 'storage/_ide_helper.php',
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'models_filename' => '_ide_helper_models.php',
+    'models_filename' => 'storage/_ide_helper_models.php',
 
     /*
     |--------------------------------------------------------------------------
@@ -34,7 +34,7 @@ return [
     | `.phpstorm.meta.php/laravel_ide_Helper.php'.
     |
     */
-    'meta_filename' => '.phpstorm.meta.php',
+    'meta_filename' => 'storage/.phpstorm.meta.php',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'include_fluent' => false,
+    'include_fluent' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -119,7 +119,7 @@ return [
     |
     */
 
-    'include_helpers' => false,
+    'include_helpers' => true,
 
     'helper_files' => [
         base_path() . '/vendor/laravel/framework/src/Illuminate/Support/helpers.php',

@@ -3,6 +3,8 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/_ide_helper.php
+/storage/.phpstorm.meta.php
 /vendor
 .env
 .env.backup
@@ -14,3 +16,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
