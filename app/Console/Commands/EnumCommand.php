@@ -10,10 +10,6 @@ use Illuminate\Support\Str;
 class EnumCommand extends GeneratorCommand
 {
     /**
-     * Constant variable to indicate the given type for enum is string.
-     */
-    private const ENUM_TYPE_STRING = 'string';
-    /**
      * Constant variable to indicate the given type for enum is integer.
      */
     private const ENUM_TYPE_INT = 'int';
@@ -94,11 +90,11 @@ class EnumCommand extends GeneratorCommand
     /**
      * Replace the name for the given stub.
      *
-     * @param $stub
-     * @param $name
+     * @param string $stub
+     * @param string $name
      * @return void
      */
-    protected function replaceEnumName(&$stub, $name): void
+    protected function replaceEnumName(string &$stub, string $name): void
     {
         $stub = str_replace('{{ enum }}', last(explode('\\', $name)), $stub);
     }
@@ -106,21 +102,27 @@ class EnumCommand extends GeneratorCommand
     /**
      * Replace the enum type for the given stub.
      *
-     * @param $stub
+     * @param string $stub
      * @return void
      */
-    protected function replaceEnumType(&$stub): void
+    protected function replaceEnumType(string &$stub): void
     {
-        $stub = str_replace('{{ type }}', $this->option('type') ? ":" . $this->option('type') : '', $stub);
+        $replacer = '';
+
+        if ($this->option('type') && is_string($this->option('type'))) {
+            $replacer = ':' . $this->option('type');
+        }
+
+        $stub = str_replace('{{ type }}', $replacer, $stub);
     }
 
     /**
      * Replace the cases for the given stub.
      *
-     * @param $stub
+     * @param string $stub
      * @return void
      */
-    protected function replaceCases(&$stub): void
+    protected function replaceCases(string &$stub): void
     {
         if (!$this->option('cases') | empty($this->option('cases'))) {
             $stub = str_replace('{{ cases }}', '', $stub);
@@ -130,10 +132,10 @@ class EnumCommand extends GeneratorCommand
 
         $replacer = [];
 
-        foreach ($this->option('cases') as $case) {
+        foreach ((array)$this->option('cases') as $case) {
             $replacer[] = $this->option('type') === self::ENUM_TYPE_INT
                 ? "case ${case};"
-                : "case ${case} = " . "'" . implode('.', array_map(fn($str) => Str::lower($str), Str::ucsplit($case))) . "';";
+                : "case ${case} = " . "'" . implode('.', array_map(fn ($str) => Str::lower($str), Str::ucsplit($case))) . "';";
         }
 
         $stub = str_replace('{{ cases }}', implode("\n\t", $replacer), $stub);
